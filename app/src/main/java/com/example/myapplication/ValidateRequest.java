@@ -13,11 +13,11 @@ public class ValidateRequest extends StringRequest {
     final static  private String URL="C:\\wamp64\\www\\UserValidate.php";
     private Map<String, String> map;
 
-    public ValidateRequest(String UserEmail, Response.Listener<String> listener){
+    public ValidateRequest(String UserID, Response.Listener<String> listener){
         super(Method.POST, URL, listener,null);
 
         map = new HashMap<>();
-        map.put("UserEmail", UserEmail);
+        map.put("UserID", UserID);
     }
 
     @Override

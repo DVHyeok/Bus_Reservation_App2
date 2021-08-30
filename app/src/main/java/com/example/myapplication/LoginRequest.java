@@ -11,14 +11,14 @@ import java.util.Map;
 public class LoginRequest extends StringRequest {
 
     //서버 URL 설정(php 파일 연동)
-    final static private String URL = "C:\\wamp64\\www\\Login.php";
+    final static private String URL = "http://127.0.0.1/login.php";
     private Map<String, String> map;
 
-    public LoginRequest(String UserEmail, String UserPwd, Response.Listener<String> listener) {
+    public LoginRequest(String UserID, String UserPwd, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
-        map.put("UserEmail", UserEmail);
+        map.put("UserID", UserID);
         map.put("UserPwd", UserPwd);
     }
 

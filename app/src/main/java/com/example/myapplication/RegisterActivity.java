@@ -19,10 +19,10 @@ import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText join_id, join_password, join_name, join_pwck;
+    private EditText join_id, join_password, join_name, join_pwck, join_phone;
     private Button join_button, check_button;
     private AlertDialog dialog;
-    private boolean validate = false;
+    private boolean validate = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,20 +34,20 @@ public class RegisterActivity extends AppCompatActivity {
         join_password = findViewById( R.id.join_password );
         join_name = findViewById( R.id.join_name );
         join_pwck = findViewById(R.id.join_pwck);
+        join_phone = findViewById(R.id.join_phone);
 
 
         //아이디 중복 체크
         check_button = findViewById(R.id.check_button);
         check_button.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
-                String UserEmail = join_id.getText().toString();
+                String UserID = join_id.getText().toString();
                 if (validate) {
                     return; //검증 완료
                 }
 
-                if (UserEmail.equals("")) {
+                if (UserID.equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     dialog = builder.setMessage("아이디를 입력하세요.").setPositiveButton("확인", null).create();
                     dialog.show();
@@ -80,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 };
-                ValidateRequest validateRequest = new ValidateRequest(UserEmail, responseListener);
+                ValidateRequest validateRequest = new ValidateRequest(UserID, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
                 queue.add(validateRequest);
             }
@@ -96,6 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
                 final String UserEmail = join_id.getText().toString();
                 final String UserPwd = join_password.getText().toString();
                 final String UserName = join_name.getText().toString();
+                final String UserPhone = join_phone.getText().toString();
                 final String PassCk = join_pwck.getText().toString();
 
 
@@ -108,7 +109,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 //한 칸이라도 입력 안했을 경우
-                if (UserEmail.equals("") || UserPwd.equals("") || UserName.equals("")) {
+                if (UserEmail.equals("") || UserPwd.equals("") || UserName.equals("") || UserPhone.equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     dialog = builder.setMessage("모두 입력해주세요.").setNegativeButton("확인", null).create();
                     dialog.show();
@@ -151,7 +152,7 @@ public class RegisterActivity extends AppCompatActivity {
                 };
 
                 //서버로 Volley를 이용해서 요청
-                RegisterRequest registerRequest = new RegisterRequest( UserEmail, UserPwd, UserName, responseListener);
+                RegisterRequest registerRequest = new RegisterRequest( UserEmail, UserPwd, UserName, UserPhone, responseListener);
                 RequestQueue queue = Volley.newRequestQueue( RegisterActivity.this );
                 queue.add( registerRequest );
             }

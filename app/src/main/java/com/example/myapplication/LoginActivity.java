@@ -19,7 +19,6 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText login_id, login_password;
-    private Button login_button, join_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,18 +28,17 @@ public class LoginActivity extends AppCompatActivity {
         login_id = findViewById( R.id.login_id );
         login_password = findViewById( R.id.login_password );
 
-        join_button = findViewById( R.id.join_button );
+        Button join_button = findViewById( R.id.join_button );
         join_button.setOnClickListener( new Button.OnClickListener() {
-
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent( LoginActivity.this, MainActivity.class );
+                Intent intent = new Intent( LoginActivity.this, RegisterActivity.class );
                 startActivity( intent );
             }
         });
 
 
-        login_button = findViewById( R.id.login_button );
+        Button login_button = findViewById( R.id.login_button );
         login_button.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                                 String UserName = jsonObject.getString( "UserName" );
 
                                 Toast.makeText( getApplicationContext(), String.format("%s님 환영합니다.", UserName), Toast.LENGTH_SHORT ).show();
-                                Intent intent = new Intent( LoginActivity.this, MainActivity.class );
+                                Intent intent = new Intent( LoginActivity.this, RegisterRequest.class );
 
                                 intent.putExtra( "UserID", UserID );
                                 intent.putExtra( "UserPW", UserPW );
@@ -79,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 };
+
                 LoginRequest loginRequest = new LoginRequest( UserID, UserPW, responseListener );
                 RequestQueue queue = Volley.newRequestQueue( LoginActivity.this );
                 queue.add( loginRequest );
